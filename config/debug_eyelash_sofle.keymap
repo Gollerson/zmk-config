@@ -1,0 +1,55 @@
+/*
+ * DEBUG keymap — identify matrix positions on the Eyelash Sofle.
+ *
+ * Every matrix position types its own index as [NNN] (space-separated) so you
+ * can press a key in a text editor and read which position it is.
+ *
+ * HOW TO USE:
+ *   1. Build & flash this to the RIGHT half (and left if you want).
+ *   2. Open a text editor on your PC, plug in via USB (so it types over USB).
+ *   3. Press each thumb key and each joystick direction/press.
+ *   4. Note which [NNN] appears for each physical key.
+ *   5. Report back, then we wire the real keymap.
+ *
+ * Thumb positions: 52-57 (left), 58-63 (right).
+ * Joystick: 6 (up), 19 (down), 32 (left), 45 (right), 58 (press) - to verify.
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    macros {
+        i006: i006 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N0 &kp N6 &kp SPACE>; };
+        i019: i019 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N1 &kp N9 &kp SPACE>; };
+        i032: i032 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N3 &kp N2 &kp SPACE>; };
+        i045: i045 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N4 &kp N5 &kp SPACE>; };
+        i052: i052 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N2 &kp SPACE>; };
+        i053: i053 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N3 &kp SPACE>; };
+        i054: i054 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N4 &kp SPACE>; };
+        i055: i055 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N5 &kp SPACE>; };
+        i056: i056 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N6 &kp SPACE>; };
+        i057: i057 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N7 &kp SPACE>; };
+        i058: i058 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N8 &kp SPACE>; };
+        i059: i059 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N5 &kp N9 &kp SPACE>; };
+        i060: i060 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N6 &kp N0 &kp SPACE>; };
+        i061: i061 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N6 &kp N1 &kp SPACE>; };
+        i062: i062 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N6 &kp N2 &kp SPACE>; };
+        i063: i063 { compatible = "zmk,behavior-macro"; #binding-cells = <0>; bindings = <&kp N0 &kp N6 &kp N3 &kp SPACE>; };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        base {
+            display-name = "DEBUG";
+            bindings = <
+&trans &trans &trans &trans &trans &trans    &i006    &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans    &i019    &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans    &i032    &trans &trans &trans &trans &trans &trans
+&trans &trans &trans &trans &trans &trans    &i045    &trans &trans &trans &trans &trans &trans
+&i052  &i053  &i054  &i055  &i056  &i057     &i058    &i059  &i060  &i061  &i062  &i063
+            >;
+        };
+    };
+};
