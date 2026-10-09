@@ -16,8 +16,7 @@
  *   0 BASE   QWERTY, mods on thumbs, left encoder = volume
  *   1 SYM    code symbols, mod-morph brackets
  *   2 NAV    vim navigation + register macros
- *   3 NUMFN  numbers / F-keys / media
- *   4 SYS    bluetooth, output, rgb, reset, bootloader, soft off
+ *   3 SYS    bluetooth, output, rgb, reset, bootloader, soft off
  *
  * MATRIX (eyelash_sofle default_transform, 5 rows x 14 cols, col6 unused):
  *   13 / 13 / 13 / 13 / 12 = 64 positions.
@@ -126,11 +125,11 @@
         base {
             display-name = "BASE";
             bindings = <
-&kp ESC    &kp N1    &kp N2    &kp N3    &kp N4    &kp N5      &kp UP       &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp BSPC
+&kp ESC    &kp N1    &kp N2    &kp N3    &kp N4    &kp N5      &kp UP       &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &kp QUESTION
 &kp TAB    &kp Q       &kp W       &kp E       &kp R       &kp T    &kp DOWN     &kp Y     &kp U     &kp I     &kp O     &kp P     &kp BSLH
 &kp CAPS   &kp A       &kp S       &kp D       &kp F       &kp G    &kp LEFT     &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp APOS
-&kp LSHFT  &kp Z    &kp X    &kp C    &kp V    &kp B     &kp RIGHT    &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp ENTER
-&kp C_MUTE &kp LCTRL &kp LGUI &kp LALT &kp SPACE &mo 1       &mo 2     &kp ENTER &kp BSPC  &mo 3     &mo 4     &kp RSHFT
+&kp LSHFT  &kp Z    &kp X    &kp C    &kp V    &kp B     &kp RIGHT    &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp MINUS
+&kp C_MUTE &kp LCTRL &kp LGUI &kp LALT &kp SPACE &mo 1       &kp ENTER &kp BSPC   &kp ENTER &mo 2   &mo 3  &kp RSHFT
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
@@ -142,7 +141,7 @@
 &kp GRAVE  &kp F1    &kp F2    &kp F3    &kp F4    &kp F5                                &kp UP       &kp F6       &kp F7    &kp F8       &kp F9    &kp F10   &kp F11
 &kp TILDE  &trans    &kp EXCL  &kp AT    &kp HASH  &kp DLLR                              &kp DOWN     &kp PRCNT    &kp CARET &kp AMPS     &kp STAR  &kp LPAR  &kp RPAR
 &kp PIPE   &kp EQUAL &kp PLUS  &kp MINUS &paren    &brack                               &kp LEFT     &brace       &angle    &kp COLON    &kp SEMI  &kp DQT   &kp APOS
-&trans     &trans    &kp COMMA &kp DOT   &kp BSLH  &kp MINUS                             &kp RIGHT    &kp GRAVE    &kp TILDE &kp UNDER    &kp EQUAL &quote    &trans
+&trans     &trans    &kp COMMA &kp DOT   &kp BSLH  &kp DEL                               &kp RIGHT    &kp GRAVE    &kp TILDE &kp UNDER    &kp HOME  &quote    &trans
 &trans     &trans    &trans    &trans    &trans    &trans                               &trans       &trans       &trans    &trans       &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
@@ -155,26 +154,13 @@
 &kp GRAVE  &kp F1    &kp F2    &kp F3    &kp F4    &kp F5      &kp UP       &vim_yy   &kp PG_UP &kp HOME  &kp UP    &kp END   &kp PG_DN
 &kp ESC    &trans    &trans    &trans    &trans    &trans       &kp DOWN     &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp APOS
 &kp LCTRL  &vim_gg   &vim_ciw  &vim_yank &vim_paste &vim_dd     &kp LEFT     &trans    &trans    &trans    &trans    &trans    &trans
-&kp LSHFT  &trans    &trans    &trans    &trans    &trans       &kp RIGHT    &trans    &trans    &trans    &trans    &trans    &trans
+&kp LSHFT  &trans    &trans    &trans    &trans    &trans       &kp RIGHT    &kp LC(FSLH) &kp LC(F) &kp LC(S) &kp LC(B) &kp LC(LS(P)) &trans
 &trans     &trans    &trans    &trans    &trans    &trans       &trans       &trans    &trans    &trans    &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        /* ============ LAYER 3 : NUMBERS / FN ============ */
-        numfn {
-            display-name = "NUMFN";
-            bindings = <
-&kp GRAVE  &kp N1    &kp N2    &kp N3    &kp N4    &kp N5      &kp UP       &kp N6    &kp N7    &kp N8    &kp N9    &kp N0    &trans
-&kp ESC    &trans    &trans    &trans    &trans    &trans       &kp DOWN     &trans    &trans    &trans    &trans    &trans    &trans
-&trans     &trans    &trans    &trans    &trans    &trans       &kp LEFT     &trans    &trans    &trans    &trans    &trans    &trans
-&trans     &trans    &trans    &trans    &trans    &trans       &kp RIGHT    &trans    &trans    &trans    &trans    &trans    &trans
-&trans     &trans    &trans    &trans    &trans    &trans       &trans       &trans    &trans    &trans    &trans    &trans
-            >;
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-        };
-
-        /* ============ LAYER 4 : SYSTEM ============ */
+        /* ============ LAYER 3 : SYSTEM ============ */
         sys {
             display-name = "SYS";
             bindings = <
