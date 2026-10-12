@@ -14,9 +14,9 @@
  *
  * LAYERS:
  *   0 BASE   QWERTY, mods on thumbs, left encoder = volume
- *   1 SYM    code symbols, mod-morph brackets
- *   2 NAV    vim navigation + register macros
- *   3 SYS    bluetooth, output, rgb, reset, bootloader, soft off
+ *   1 SYM    every symbol as one keypress (no Shift), F1-F12, brackets on right home
+ *   2 NAV    vim text objects, motions, search, jump list, VS Code shortcuts
+ *   3 SYS    bluetooth, output, media, brightness, screenshot, rgb, reset/boot
  *
  * MATRIX (eyelash_sofle default_transform, 5 rows x 14 cols, col6 unused):
  *   13 / 13 / 13 / 13 / 12 = 64 positions.
@@ -38,83 +38,122 @@
 
 / {
     macros {
-        vim_yank: vim_yank {
+        /* ---- registers / editing ---- */
+        vim_yank: vim_yank {                     /* "+y */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp DOUBLE_QUOTES &kp PLUS &kp Y>;
+            bindings = <&kp DQT &kp PLUS &kp Y>;
         };
 
-        vim_paste: vim_paste {
+        vim_paste: vim_paste {                   /* "+p */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp DOUBLE_QUOTES &kp PLUS &kp P>;
+            bindings = <&kp DQT &kp PLUS &kp P>;
         };
 
-        vim_dd: vim_dd {
+        vim_blackhole_d: vim_blackhole_d {       /* "_d */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp D &kp D>;
+            bindings = <&kp DQT &kp UNDER &kp D>;
         };
 
-        vim_yy: vim_yy {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp Y &kp Y>;
-        };
-
-        vim_ciw: vim_ciw {
+        vim_ciw: vim_ciw {                       /* ciw */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&kp C &kp I &kp W>;
         };
 
-        vim_gg: vim_gg {
+        /* ---- text objects ---- */
+        vim_ci_dq: vim_ci_dq {                   /* ci" */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp G &kp G>;
+            bindings = <&kp C &kp I &kp DQT>;
         };
 
-        vim_visual: vim_visual {
+        vim_ci_sq: vim_ci_sq {                   /* ci' */
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp V>;
-        };
-    };
-
-    behaviors {
-        paren: paren_morph {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LPAR>, <&kp RPAR>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp C &kp I &kp APOS>;
         };
 
-        brack: brack_morph {
-            compatible = "zmk,behavior-mod-morph";
+        vim_ci_paren: vim_ci_paren {             /* ci( */
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LBKT>, <&kp RBKT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp C &kp I &kp LPAR>;
         };
 
-        brace: brace_morph {
-            compatible = "zmk,behavior-mod-morph";
+        vim_ci_brack: vim_ci_brack {             /* ci[ */
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LBRC>, <&kp RBRC>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp C &kp I &kp LBKT>;
         };
 
-        angle: angle_morph {
-            compatible = "zmk,behavior-mod-morph";
+        vim_ci_brace: vim_ci_brace {             /* ci{ */
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LT>, <&kp GT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp C &kp I &kp LBRC>;
         };
 
-        quote: quote_morph {
-            compatible = "zmk,behavior-mod-morph";
+        vim_va_brace: vim_va_brace {             /* va{ */
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp APOS>, <&kp DQT>;
-            mods = <(MOD_LSFT|MOD_RSFT)>;
+            bindings = <&kp V &kp A &kp LBRC>;
+        };
+
+        /* ---- motions ---- */
+        vim_meth_prev: vim_meth_prev {           /* [m */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LBKT &kp M>;
+        };
+
+        vim_meth_next: vim_meth_next {           /* ]m */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp RBKT &kp M>;
+        };
+
+        vim_fn_prev: vim_fn_prev {               /* [[ */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LBKT &kp LBKT>;
+        };
+
+        vim_fn_next: vim_fn_next {               /* ]] */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp RBKT &kp RBKT>;
+        };
+
+        vim_change_prev: vim_change_prev {       /* g; */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp G &kp SEMI>;
+        };
+
+        vim_change_next: vim_change_next {       /* g, */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp G &kp COMMA>;
+        };
+
+        /* ---- indent / substitute ---- */
+        vim_indent: vim_indent {                 /* >> */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp GT &kp GT>;
+        };
+
+        vim_outdent: vim_outdent {               /* << */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LT &kp LT>;
+        };
+
+        vim_subst: vim_subst {                   /* :%s/ */
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp COLON &kp PRCNT &kp S &kp FSLH>;
         };
     };
 
@@ -129,33 +168,41 @@
 &kp TAB    &kp Q       &kp W       &kp E       &kp R       &kp T    &kp DOWN     &kp Y     &kp U     &kp I     &kp O     &kp P     &kp BSLH
 &kp CAPS   &kp A       &kp S       &kp D       &kp F       &kp G    &kp LEFT     &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp APOS
 &kp LSHFT  &kp Z    &kp X    &kp C    &kp V    &kp B     &kp RIGHT    &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp MINUS
-&kp C_MUTE &kp LCTRL &kp LGUI &kp LALT &kp SPACE &mo 1       &kp ENTER &kp BSPC   &kp ENTER &mo 2   &mo 3  &kp RSHFT
+&kp C_MUTE &kp LCTRL &kp LGUI &kp LALT &kp SPACE &mo 1       &kp ENTER &kp ENTER &kp BSPC   &mo 2   &mo 3  &kp RSHFT
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         /* ============ LAYER 1 : SYMBOLS ============ */
+        /* every symbol is a single keypress (no Shift needed).
+         * Best (home) positions -> symbols hardest to reach on BASE:
+         *   row0  F1-F12
+         *   row1  ! @ # $ % ^   & * : " < >          (Shift+base on BASE)
+         *   row2  ` ~ = + _ |   ( ) [ ] { }          (unreachable on BASE)
+         *   row3  - / \ ; ' ,   . ?                  (already direct on BASE)
+         */
         symbols {
             display-name = "SYM";
             bindings = <
-&kp GRAVE  &kp F1    &kp F2    &kp F3    &kp F4    &kp F5                                &kp UP       &kp F6       &kp F7    &kp F8       &kp F9    &kp F10   &kp F11
-&kp TILDE  &trans    &kp EXCL  &kp AT    &kp HASH  &kp DLLR                              &kp DOWN     &kp PRCNT    &kp CARET &kp AMPS     &kp STAR  &kp LPAR  &kp RPAR
-&kp PIPE   &kp EQUAL &kp PLUS  &kp MINUS &paren    &brack                               &kp LEFT     &brace       &angle    &kp COLON    &kp SEMI  &kp DQT   &kp APOS
-&trans     &trans    &kp COMMA &kp DOT   &kp BSLH  &kp DEL                               &kp RIGHT    &kp GRAVE    &kp TILDE &kp UNDER    &kp HOME  &quote    &trans
-&trans     &trans    &trans    &trans    &trans    &trans                               &trans       &trans       &trans    &trans       &trans    &trans
+&kp F1     &kp F2    &kp F3    &kp F4    &kp F5    &kp F6                             &kp UP       &kp F7       &kp F8    &kp F9       &kp F10   &kp F11   &kp F12
+&kp EXCL   &kp AT    &kp HASH  &kp DLLR  &kp PRCNT &kp CARET                          &kp DOWN     &kp AMPS     &kp STAR  &kp COLON    &kp DQT   &kp LT    &kp GT
+&kp GRAVE  &kp TILDE &kp EQUAL &kp PLUS  &kp UNDER &kp PIPE                           &kp LEFT     &kp LPAR     &kp RPAR  &kp LBKT     &kp RBKT  &kp LBRC  &kp RBRC
+&kp MINUS  &kp FSLH  &kp BSLH  &kp SEMI  &kp APOS  &kp COMMA                          &kp RIGHT    &kp DOT       &kp QUESTION &trans     &trans    &trans    &trans
+&trans     &trans    &trans    &trans    &trans    &trans                             &trans       &trans       &trans    &trans       &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         /* ============ LAYER 2 : NAVIGATION / VIM ============ */
+        /* F-keys live on SYM, so the top-left row is a text-object cluster. */
         nav {
             display-name = "NAV";
             bindings = <
-&kp GRAVE  &kp F1    &kp F2    &kp F3    &kp F4    &kp F5      &kp UP       &vim_yy   &kp PG_UP &kp HOME  &kp UP    &kp END   &kp PG_DN
-&kp ESC    &trans    &trans    &trans    &trans    &trans       &kp DOWN     &kp H     &kp J     &kp K     &kp L     &kp SEMI  &kp APOS
-&kp LCTRL  &vim_gg   &vim_ciw  &vim_yank &vim_paste &vim_dd     &kp LEFT     &trans    &trans    &trans    &trans    &trans    &trans
-&kp LSHFT  &trans    &trans    &trans    &trans    &trans       &kp RIGHT    &kp LC(FSLH) &kp LC(F) &kp LC(S) &kp LC(B) &kp LC(LS(P)) &trans
-&trans     &trans    &trans    &trans    &trans    &trans       &trans       &trans    &trans    &trans    &trans    &trans
+&vim_ci_dq &vim_ci_sq &vim_ci_paren &vim_ci_brack &vim_ci_brace &vim_va_brace &kp UP    &kp STAR &kp PG_UP &kp HOME &kp UP  &kp END   &kp PG_DN
+&kp ESC    &trans    &trans        &trans        &trans        &trans          &kp DOWN  &vim_meth_prev &vim_meth_next &vim_fn_prev &vim_fn_next &kp LBRC &kp RBRC
+&kp LCTRL  &vim_ciw  &vim_yank     &vim_paste    &vim_blackhole_d &trans        &kp LEFT  &kp HASH &kp PRCNT &vim_subst &kp EQUAL &vim_indent &vim_outdent
+&kp LSHFT  &kp LC(O) &kp LC(I)     &vim_change_prev &vim_change_next &trans     &kp RIGHT &kp LC(FSLH) &kp LC(F) &kp LC(S) &kp LC(B) &kp LC(LS(P)) &kp DEL
+&trans     &trans    &trans        &trans        &trans        &trans          &trans    &trans   &trans    &trans    &trans    &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
@@ -164,10 +211,10 @@
         sys {
             display-name = "SYS";
             bindings = <
-&trans     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp UP     &bt BT_CLR &bt BT_CLR_ALL &kp F6 &kp F7 &kp F8 &kp F9
-&trans     &out OUT_USB &out OUT_BLE &trans       &trans       &trans       &kp DOWN   &trans     &trans         &trans  &trans  &trans  &kp F10
-&trans     &sys_reset  &bootloader  &trans       &trans       &trans       &kp LEFT   &trans     &trans         &trans  &trans  &trans  &kp F11
-&trans     &soft_off   &rgb_ug RGB_OFF &rgb_ug RGB_ON &rgb_ug RGB_EFF &rgb_ug RGB_BRI &kp RIGHT &trans &trans &trans &trans &rgb_ug RGB_BRD &kp F12
+&trans     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp UP     &bt BT_CLR &bt BT_CLR_ALL &kp C_BRI_UP &kp C_BRI_DN &kp C_MUTE &trans
+&trans     &out OUT_USB &out OUT_BLE &trans       &trans       &trans       &kp DOWN   &kp C_VOL_UP &kp C_VOL_DN &kp C_PREV &kp C_PLAY_PAUSE &kp C_NEXT &trans
+&trans     &sys_reset  &bootloader  &trans       &trans       &trans       &kp LEFT   &kp PRINTSCREEN &kp C_AL_LOCK &trans &trans &trans &trans
+&trans     &soft_off   &rgb_ug RGB_OFF &rgb_ug RGB_ON &rgb_ug RGB_EFF &rgb_ug RGB_BRI &kp RIGHT &trans &trans &trans &trans &rgb_ug RGB_BRD &trans
 &trans     &trans      &trans        &trans       &trans       &trans       &trans     &trans     &trans         &trans  &trans  &trans
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
